@@ -374,7 +374,13 @@ public class JschRunner extends ShellExecutor {
         if (_proxy != null) {
             session.setProxy(_proxy);
         }
-        LOG.debug("Connecting to " + _host + ":" + _port);
+        if (LOG.isDebugEnabled()) {
+            String errorMessage = "Connecting to " + _host + ":" + _port;
+            if (null != _proxy) {
+                errorMessage += " using proxy";
+            }
+            LOG.debug(errorMessage);
+        }
         if (_enableConnectionRetries) {
             // experimental
             Retry retry = Retry.onExceptions(NoRouteToHostException.class).withMaxRetries(3).withWaitTime(2500);
